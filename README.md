@@ -18,10 +18,10 @@ A scala light library to create reusable validator
   // >>+ means previous and next validator must pass, if any of them failed, skip the rest of validators.
   // <+> mean validate both validator, return all errors.
   // <<+ means any of the validator success will be treated as valid.
-  val name = notNull[String] >>+ notEmptyStr >>+ strLengthLimit(23)
+  val acceptableName = notNull[String] >>+ notEmptyStr >>+ strLengthLimit(23)
 
   // Now let's use validators to construct more complex validator to validate our data model.
-  val profile = name.lift[Profile](_.name, "name") <+>
+  val profile = acceptableName.lift[Profile](_.name, "name") <+>
                 validSex.lift(_.sex, "sex") <+>
                 acceptableAge.lift(_.age, "age") <+>
                 email.forOption.lift(_.email, "email")
